@@ -1,6 +1,8 @@
-﻿using Searcher;
+﻿using Microsoft.Extensions.Configuration;
+using Searcher;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace VersionSearch
 {
@@ -8,6 +10,9 @@ namespace VersionSearch
     {
         static void Main(string[] args)
         {
+
+            
+
             var repo = new BitBucket(new SearchConfiguration());
             var search = new Search(repo);
 
@@ -17,13 +22,13 @@ namespace VersionSearch
             while (true)
             {
                 projects.ForEach(p => Console.WriteLine($"{i++} {p.Name}"));
-                Console.Write(":");
+                Console.Write("Selection :");
                 int projectNumber = Convert.ToInt32(Console.ReadLine());
 
                 var repos =  repo.GetRepos(projects[projectNumber]).Result;
                 i = 0;
                 repos.ForEach(r => Console.WriteLine($"{i++} {r.Name}"));
-                Console.Write(":");
+                Console.Write("Selection :");
                 int repoNumber = Convert.ToInt32(Console.ReadLine());
 
                 var files =  search.FindFiles(repos[repoNumber], @".*.txt").Result; //.*.csproj
