@@ -29,7 +29,7 @@ namespace Searcher
 
         public async Task<List<Project>> GetProjects()
         {
-            var response = await _httpClient.GetAsync($"{_configuration.BaseBitBucketUrl}/rest/api/1.0/projects/");
+            var response = await _httpClient.GetAsync($"{_configuration.BaseBitBucketUrl}/rest/api/1.0/projects/?limit={_configuration.MaxProjectsReturned}");
             if (!response.IsSuccessStatusCode)
                 throw new InvalidOperationException($"Call to get projects failed: {response.StatusCode}");
             var content = response.Content.ReadAsStringAsync();
@@ -45,7 +45,7 @@ namespace Searcher
 
         public async Task<List<RepoFile>> GetRepoFiles(RepositorySlug repositorySlug)
         {
-            var response = await _httpClient.GetAsync($"{_configuration.BaseBitBucketUrl}/rest/api/1.0/projects/{repositorySlug.ContainingProject.Name}/repos/{repositorySlug.Name}/files/");
+            var response = await _httpClient.GetAsync($"{_configuration.BaseBitBucketUrl}/rest/api/1.0/projects/{repositorySlug.ContainingProject.Name}/repos/{repositorySlug.Name}/files/?limit={_configuration.MaxFilesReturned}");
             if (!response.IsSuccessStatusCode)
                 throw new InvalidOperationException($"Call to get files failed: {response.StatusCode}");
             var content = response.Content.ReadAsStringAsync();
@@ -60,7 +60,7 @@ namespace Searcher
 
         public async Task<List<RepositorySlug>> GetRepos(Project project)
         {
-            var response = await _httpClient.GetAsync($"{_configuration.BaseBitBucketUrl}/rest/api/1.0/projects/{project.Name}/repos");
+            var response = await _httpClient.GetAsync($"{_configuration.BaseBitBucketUrl}/rest/api/1.0/projects/{project.Name}/repos?limit={_configuration.MaxReposReturned}");
             if (!response.IsSuccessStatusCode)
                 throw new InvalidOperationException($"Call to get repositories failed: {response.StatusCode}");
             var content = response.Content.ReadAsStringAsync();

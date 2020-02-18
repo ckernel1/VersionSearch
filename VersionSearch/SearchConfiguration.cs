@@ -11,7 +11,8 @@ namespace VersionSearch
         {
             var builder = new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory())
-        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddUserSecrets<Program>();
 
             _configurationRoot = builder.Build();
         }
@@ -25,6 +26,9 @@ namespace VersionSearch
 
         public string ContentMatchPattern => _configurationRoot["ContentMatchPattern"];
 
-        
+        public string MaxFilesReturned => _configurationRoot["MaxFilesReturned"];
+
+        public string MaxReposReturned => _configurationRoot["MaxReposReturned"];
+        public string MaxProjectsReturned => _configurationRoot["MaxProjectsReturned"];
     }
 }

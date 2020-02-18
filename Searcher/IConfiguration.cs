@@ -6,5 +6,8 @@
         string BaseBitBucketUrl { get; }
         string FileSearchPattern { get; }
         string ContentMatchPattern { get; }
+        string MaxFilesReturned { get; }
+        string MaxReposReturned { get; }
+        string MaxProjectsReturned { get; }
     }
 }
