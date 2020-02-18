@@ -11,19 +11,19 @@ namespace VersionSearch
         {
             var builder = new ConfigurationBuilder()
         .SetBasePath(Directory.GetCurrentDirectory())
-        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-            IConfigurationRoot configuration = builder.Build();
+            _configurationRoot = builder.Build();
         }
         public SearchConfiguration(IConfigurationRoot configurationRoot) => _configurationRoot = configurationRoot;
 
-        public string BitBucketToken => "NjgyNTUzMTIwNjUzOv4WxW1sKT+CY0w23LkfTD9oYP3H";
+        public string BitBucketToken => _configurationRoot["BitBucketToken"];
 
-        public string BaseBitBucketUrl => "http://localhost:7990/bitbucket";
+        public string BaseBitBucketUrl => _configurationRoot["BaseBitBucketUrl"];
 
-        public string FileSearchPattern => ".*.csproj";
+        public string FileSearchPattern => _configurationRoot["FileSearchPattern"];
 
-        public string ContentMatchPattern => "TargetFramework (.*) TargetFramework";
+        public string ContentMatchPattern => _configurationRoot["ContentMatchPattern"];
 
         
     }
