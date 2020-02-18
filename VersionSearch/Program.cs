@@ -12,8 +12,8 @@ namespace VersionSearch
         {
 
             
-
-            var repo = new BitBucket(new SearchConfiguration());
+            var config = new SearchConfiguration();
+            var repo = new BitBucket(config);
             var search = new Search(repo);
 
             var projects = repo.GetProjects().Result;
@@ -21,6 +21,7 @@ namespace VersionSearch
 
             while (true)
             {
+                i = 0;
                 projects.ForEach(p => Console.WriteLine($"{i++}. {p.Name}"));
                 Console.Write("Selection : ");
                 int projectNumber = Convert.ToInt32(Console.ReadLine());
@@ -31,8 +32,8 @@ namespace VersionSearch
                 Console.Write("Selection : ");
                 int repoNumber = Convert.ToInt32(Console.ReadLine());
 
-                var files =  search.FindFiles(repos[repoNumber], @".*.txt").Result; //.*.csproj
-                var grouping = search.GroupByPattern(files, "(file)"); //TargetFramework (.*) TargetFramework
+                var files =  search.FindFiles(repos[repoNumber],config.FileSearchPattern).Result; //.*.csproj
+                var grouping = search.GroupByPattern(files, config.ContentMatchPattern); //TargetFramework (.*) TargetFramework
                 Console.Clear();
                 RunReport(grouping);
                 Console.WriteLine(); Console.WriteLine();

@@ -53,7 +53,7 @@ namespace Searcher
             dynamic json = JsonConvert.DeserializeObject<ExpandoObject>(await content);
             foreach (dynamic path in json.values)
             {
-                result.Add(new RepoFile { RelativePath = path });
+                result.Add(new RepoFile { RelativePath = path, ContainingRepositorySlug=repositorySlug });
             }
             return result;
         }

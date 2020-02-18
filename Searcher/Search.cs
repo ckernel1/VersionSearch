@@ -28,7 +28,8 @@ namespace Searcher
             ConcurrentDictionary<string, List<RepoFile>> result = new ConcurrentDictionary<string, List<RepoFile>>(); 
             Parallel.ForEach(repoFiles, f =>
             {
-                var match = regex.Match(groupingPattern);
+                var fileContent = _repository.GetFileContent(f.ContainingRepositorySlug, f.RelativePath).Result;
+                var match = regex.Match(fileContent);
                 if (match.Success)
                 {
                     var val = match.Captures.First().Value;
